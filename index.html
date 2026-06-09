@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="午餐信号站：从 30 种气味较小、适合作为正餐的外卖中随机选择今天的一餐。"
+    />
+    <title>午餐信号站</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="午餐信号站首页">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span>
+        </span>
+        <span>午餐信号站</span>
+      </a>
+
+      <button class="list-trigger" id="listTrigger" type="button">
+        查看全部 <strong>30</strong> 项
+      </button>
+    </header>
+
+    <main class="layout">
+      <section class="intro" aria-labelledby="pageTitle">
+        <div class="eyebrow">
+          <span class="status-dot"></span>
+          LUNCH SIGNAL · ONLINE
+        </div>
+
+        <h1 id="pageTitle">
+          今天吃什么，<br />
+          <span>交给午餐宇宙。</span>
+        </h1>
+
+        <p class="intro-copy">
+          已装载 30 份适合正餐、气味友好的外卖。启动发射台，5 秒后接收今天的午餐信号。
+        </p>
+
+        <div class="mini-readout" aria-label="选择器信息">
+          <div>
+            <span>候选餐点</span>
+            <strong>30</strong>
+          </div>
+          <div>
+            <span>传输用时</span>
+            <strong>5.0s</strong>
+          </div>
+          <div>
+            <span>当前模式</span>
+            <strong>随机</strong>
+          </div>
+        </div>
+
+        <div class="history-panel">
+          <div class="history-heading">
+            <span>最近接收</span>
+            <button id="clearHistory" type="button">清空</button>
+          </div>
+          <div class="history-empty" id="historyEmpty">还没有发射记录</div>
+          <ol class="history-list" id="historyList"></ol>
+        </div>
+      </section>
+
+      <section class="machine-section" aria-label="午餐随机选择器">
+        <div class="machine-shadow" aria-hidden="true"></div>
+
+        <div class="antenna" aria-hidden="true">
+          <span class="antenna-signal signal-one"></span>
+          <span class="antenna-signal signal-two"></span>
+          <span class="antenna-ball"></span>
+          <span class="antenna-stem"></span>
+        </div>
+
+        <div class="machine" id="machine">
+          <div class="machine-top">
+            <span>味觉轨道舱</span>
+            <span>NO. 030</span>
+          </div>
+
+          <div class="viewport-wrap">
+            <div class="viewport" id="viewport">
+              <div class="orbit orbit-one" aria-hidden="true">
+                <span class="food-capsule cap-red"></span>
+                <span class="food-capsule cap-yellow"></span>
+                <span class="food-capsule cap-green"></span>
+                <span class="food-capsule cap-white"></span>
+              </div>
+              <div class="orbit orbit-two" aria-hidden="true">
+                <span class="food-capsule cap-yellow"></span>
+                <span class="food-capsule cap-green"></span>
+                <span class="food-capsule cap-white"></span>
+                <span class="food-capsule cap-red"></span>
+              </div>
+
+              <div class="core">
+                <div class="core-icon" id="coreIcon" aria-hidden="true">
+                  <span class="bowl">
+                    <i></i>
+                  </span>
+                </div>
+                <p class="core-label" id="coreLabel">等待信号</p>
+                <strong class="preview-food" id="previewFood">准备好了吗？</strong>
+              </div>
+
+              <div class="stars" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+            </div>
+          </div>
+
+          <div class="control-deck">
+            <div
+              class="countdown"
+              id="countdown"
+              style="--progress: 0deg"
+              aria-hidden="true"
+            >
+              <div>
+                <strong id="countdownNumber">5</strong>
+                <span>SEC</span>
+              </div>
+            </div>
+
+            <div class="launch-control">
+              <p id="phaseText">系统空闲 · 等待发射</p>
+              <button class="launch-button" id="launchButton" type="button">
+                <span class="button-light"></span>
+                <span class="button-copy">
+                  <small>PRESS TO LAUNCH</small>
+                  <strong>发射午餐信号</strong>
+                </span>
+                <span class="button-arrow" aria-hidden="true">↗</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="machine-footer" aria-hidden="true">
+            <span>SMELL FRIENDLY</span>
+            <span class="footer-lights"><i></i><i></i><i></i></span>
+            <span>MEAL READY</span>
+          </div>
+        </div>
+
+        <div class="result-ticket" id="resultTicket" aria-live="polite">
+          <div class="ticket-notch notch-left"></div>
+          <div class="ticket-notch notch-right"></div>
+          <div class="ticket-label">TODAY'S LUNCH</div>
+          <div class="ticket-content">
+            <span id="resultNumber">#00</span>
+            <strong id="resultFood">午餐信号待接收</strong>
+          </div>
+          <div class="ticket-footer">
+            <span>请凭此信号前往外卖软件下单</span>
+            <span id="resultTime">--:--</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <dialog class="food-dialog" id="foodDialog">
+      <div class="dialog-header">
+        <div>
+          <span>MEAL DATABASE</span>
+          <h2>30 份午餐候选</h2>
+        </div>
+        <button id="closeDialog" type="button" aria-label="关闭候选列表">×</button>
+      </div>
+      <p class="dialog-intro">均为适合正餐、气味相对较小的常见外卖。</p>
+      <ol class="food-grid" id="foodGrid"></ol>
+    </dialog>
+
+    <div class="confetti-layer" id="confettiLayer" aria-hidden="true"></div>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
