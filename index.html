@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="午餐信号站：从静安寺附近 30 家高评分餐厅中随机选择今天的一餐。"
+      content="午餐信号站：选择普通版或健康减脂版，从对应的 50 家静安寺附近外卖中随机抽取今天的一餐。"
     />
     <title>午餐信号站</title>
-    <script type="module" crossorigin src="./assets/index-aPhhgMTu.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Bp7WjyeG.css">
+    <script type="module" crossorigin src="./assets/index-BHX8kx5N.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Ce0sotw6.css">
   </head>
   <body>
     <div class="noise" aria-hidden="true"></div>
@@ -22,9 +22,14 @@
         <span>午餐信号站</span>
       </a>
 
-      <button class="list-trigger" id="listTrigger" type="button">
-        查看全部 <strong>30</strong> 项
-      </button>
+      <div class="header-actions">
+        <button class="mode-trigger" id="modeTrigger" type="button">
+          切换模式
+        </button>
+        <button class="list-trigger" id="listTrigger" type="button">
+          查看全部 <strong id="headerCount">50</strong> 项
+        </button>
+      </div>
     </header>
 
     <main class="layout">
@@ -39,14 +44,14 @@
           <span>交给午餐宇宙。</span>
         </h1>
 
-        <p class="intro-copy">
-          已装载静安寺附近 30 家评分高于 4 分的餐厅。启动发射台，5 秒后接收今天的午餐信号。
+        <p class="intro-copy" id="introCopy">
+          请选择午餐模式，系统将加载对应的 50 家候选餐厅。
         </p>
 
         <div class="mini-readout" aria-label="选择器信息">
           <div>
             <span>候选餐厅</span>
-            <strong>30</strong>
+            <strong id="candidateCount">50</strong>
           </div>
           <div>
             <span>传输用时</span>
@@ -54,7 +59,7 @@
           </div>
           <div>
             <span>当前模式</span>
-            <strong>随机</strong>
+            <strong id="currentModeLabel">待选择</strong>
           </div>
         </div>
 
@@ -80,8 +85,8 @@
 
         <div class="machine" id="machine">
           <div class="machine-top">
-            <span>味觉轨道舱</span>
-            <span>NO. 030</span>
+            <span id="machineModeLabel">味觉轨道舱</span>
+            <span id="machineCount">NO. 050</span>
           </div>
 
           <div class="viewport-wrap">
@@ -157,23 +162,65 @@
             <strong id="resultFood">午餐信号待接收</strong>
           </div>
           <div class="ticket-footer">
-            <span>请凭此信号前往外卖软件下单</span>
+            <span id="resultHint">请凭此信号前往外卖软件下单</span>
             <span id="resultTime">--:--</span>
           </div>
         </div>
       </section>
     </main>
 
+    <dialog
+      class="mode-dialog"
+      id="modeDialog"
+      aria-labelledby="modeDialogTitle"
+    >
+      <div class="mode-dialog-panel">
+        <div class="mode-dialog-heading">
+          <span>SELECT YOUR LUNCH CHANNEL</span>
+          <h2 id="modeDialogTitle">今天想吃哪一版？</h2>
+          <p>先选频道，再由午餐宇宙从对应的 50 家餐厅中抽取。</p>
+        </div>
+
+        <div class="mode-options">
+          <button class="mode-card mode-card-normal" type="button" data-mode="normal">
+            <span class="mode-card-index">01</span>
+            <span class="mode-card-icon" aria-hidden="true">食</span>
+            <span class="mode-card-copy">
+              <small>EVERYDAY LUNCH</small>
+              <strong>普通版</strong>
+              <span>平价外卖 · 多种菜系 · 单人约 50 元内</span>
+            </span>
+            <span class="mode-card-count">50 家</span>
+          </button>
+
+          <button class="mode-card mode-card-healthy" type="button" data-mode="healthy">
+            <span class="mode-card-index">02</span>
+            <span class="mode-card-icon" aria-hidden="true">轻</span>
+            <span class="mode-card-copy">
+              <small>HEALTHY & FIT</small>
+              <strong>健康减脂版</strong>
+              <span>高蛋白 · 主食可控 · 附带点单建议</span>
+            </span>
+            <span class="mode-card-count">50 家</span>
+          </button>
+        </div>
+
+        <p class="mode-dialog-note">
+          配送范围和价格以外卖平台实时信息为准
+        </p>
+      </div>
+    </dialog>
+
     <dialog class="food-dialog" id="foodDialog">
       <div class="dialog-header">
         <div>
           <span>MEAL DATABASE</span>
-          <h2>30 份午餐候选</h2>
+          <h2 id="foodDialogTitle">50 份午餐候选</h2>
         </div>
         <button id="closeDialog" type="button" aria-label="关闭候选列表">×</button>
       </div>
-      <p class="dialog-intro">
-        覆盖多种菜系，评分参考网络公开信息；外卖范围请以平台实时配送地址为准。
+      <p class="dialog-intro" id="foodDialogIntro">
+        请选择模式后查看对应清单。
       </p>
       <ol class="food-grid" id="foodGrid"></ol>
     </dialog>
